@@ -1,0 +1,46 @@
+[project]
+name = "pySigma-backend-openobserve"
+version = "0.1.0"
+description = "pySigma openobserve backend"
+readme = "README.md"
+authors = [
+    { name = "juju4" }
+]
+license = "LGPL-3.0-only"
+
+[tool.poetry]
+packages = [
+    { include = "sigma" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pysigma = "^0.11.17"
+# Pending PR merge https://github.com/JustinGuese/python-openobserve/pulls
+# python_openobserve = ">0.1.4"
+python_openobserve = "git+https://github.com/juju4/python-openobserve.git@79107c3a357ea4bbfe88a7163a06191b145c9314"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.1"
+pytest = "^8.0"
+pytest-cov = "^4.1"
+coverage = "^7.4"
+
+
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = []
+
+[tool.pdm.build]
+includes = ["sigma"]
+[build-system]
+requires = ["poetry-core>=1.8.1"]
+build-backend = "poetry.core.masonry.api"
+
+[project.urls]
+Repository = "https://github.com/juju4/pySigma-backend-openobserve"
+
+[project.group.dev.dependencies]
+pytest = "^8.0"
+pytest-cov = "^4.1"
+coverage = "^7.4"

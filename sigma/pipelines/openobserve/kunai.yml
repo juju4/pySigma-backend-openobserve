@@ -1,0 +1,48 @@
+# TODO: replace TABLENAME
+name: Sigma to kunai field mapping
+priority: 30
+rule_conditions:
+  - type: os_type
+    product: linux
+transformations:
+- id: field_mapping
+  type: field_name_mapping
+  mapping:
+    Image:
+    - data_exe_path
+    CommandLine:
+    - data_command_line
+    ParentImage:
+    - data_ancestors
+    User:
+    - info_task_user
+    ProcessId:
+    - info_task_pid
+    ParentProcessId:
+    - info_parent_task_pid
+    Computer:
+    - host_name
+    md5:
+    - data_exe_md5
+    sha1:
+    - data_exe_sha1
+    sha256:
+    - data_exe_sha256
+    Image:
+    - data_exe_path
+    ParentImage:
+    - data_ancestors
+    User:
+    - info_task_user
+    ProcessId:
+    - info_task_pid
+    ParentProcessId:
+    - info_parent_task_pid
+    Computer:
+    - host_name
+    DestinationHostname:
+    - data_dst_hostname
+    DestinationIp:
+    - data_dst_ip
+    DestinationPort:
+    - data_dst_port
