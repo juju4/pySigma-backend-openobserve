@@ -18,7 +18,7 @@ python = "^3.9"
 pysigma = "^0.11.17"
 # Pending PR merge https://github.com/JustinGuese/python-openobserve/pulls
 # python_openobserve = ">0.1.4"
-python_openobserve = "git+https://github.com/juju4/python-openobserve.git#79107c3a357ea4bbfe88a7163a06191b145c9314"
+python_openobserve = "git+https://github.com/juju4/python-openobserve.git#devel-all"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.1"
