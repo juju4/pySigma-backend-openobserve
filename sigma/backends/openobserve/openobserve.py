@@ -35,7 +35,7 @@ class openobserveBackend(TextQueryBackend):
     name: ClassVar[str] = "OpenObserve backend"
     formats: Dict[str, str] = {
         "default": "Plain SQL queries (OpenObserve/Apache Datafusion)",
-        "o2-alerts": "OpenObserve JSON alerts",
+        "o2alert": "OpenObserve JSON alerts",
     }
     requires_pipeline: bool = (
         False  # TODO: does the backend requires that a processing pipeline is provided? This information can be used by user interface programs like Sigma CLI to warn users about inappropriate usage of the backend.
@@ -82,7 +82,8 @@ class openobserveBackend(TextQueryBackend):
     )
 
     escape_char: ClassVar[str] = (
-        "\\"  # Escaping character for special characters inside string
+        # "\\"  # Escaping character for special characters inside string
+        ""
     )
     wildcard_multi: ClassVar[str] = "%"  # Character used as multi-character wildcard
     wildcard_single: ClassVar[str] = "_"  # Character used as single-character wildcard
@@ -108,9 +109,9 @@ class openobserveBackend(TextQueryBackend):
     # String matching operators. if none is appropriate eq_token is used.
     # FIXME! OpenObserve identifies ESCAPE as operator but triggers execution error
     # "Error during planning: Invalid escape character in LIKE expression"
-    startswith_expression: ClassVar[str] = "{field} LIKE '{value}%' ESCAPE '\\'"
-    endswith_expression: ClassVar[str] = "{field} LIKE '%{value}' ESCAPE '\\'"
-    contains_expression: ClassVar[str] = "{field} LIKE '%{value}%' ESCAPE '\\'"
+    startswith_expression: ClassVar[str] = "{field} LIKE '{value}%'"
+    endswith_expression: ClassVar[str] = "{field} LIKE '%{value}'"
+    contains_expression: ClassVar[str] = "{field} LIKE '%{value}%'"
     wildcard_match_expression: ClassVar[str] = (
         # "{field} LIKE '{value}' ESCAPE '\\'"  # Special expression if wildcards can't be matched with the eq_token operator
         "{field} LIKE '{value}'"
@@ -128,7 +129,9 @@ class openobserveBackend(TextQueryBackend):
     # Regular expression query as format string with placeholders {field}, {regex}, {flag_x} where x
     # is one of the flags shortcuts supported by Sigma (currently i, m and s) and refers to the
     # token stored in the class variable re_flags.
-    re_expression: ClassVar[str] = "regexp_match({field}, '{regex}', '{flag_i}')"
+    # Empty flag string will make openobserve error.
+    # re_expression: ClassVar[str] = "regexp_like({field}, '{regex}', '{flag_i}')"
+    re_expression: ClassVar[str] = "regexp_like({field}, '{regex}', 'i')"
     re_escape_char: ClassVar[str] = (
         ""  # Character used for escaping in regular expressions
     )
@@ -403,11 +406,11 @@ class openobserveBackend(TextQueryBackend):
         return o2_query
 
 
-    def finalize_query_o2_alert(
+    def finalize_query_o2alert(
         self, rule: SigmaRule, query: str, index: int, state: ConversionState
     ) -> Any:
 
-        o2_query = f"SELECT * FROM {self.table} WHERE {query}"
+        o2_query = f'SELECT * FROM "{self.table}" WHERE {query}'
         rule_as_dict = rule.to_dict()
 
         o2_alert_rule = {
@@ -415,12 +418,12 @@ class openobserveBackend(TextQueryBackend):
             "name": rule_as_dict["title"],
             "org_id": "default",
             "stream_type": "logs",
-            "stream_name": "{self.table}",
+            "stream_name": self.table,
             "is_real_time": False,
             "query_condition": {
                 "type": "sql",
                 "conditions": [],
-                "sql": f"{o2_query}",
+                "sql": o2_query,
                 "multi_time_range": []
             },
             "trigger_condition": {
@@ -454,7 +457,7 @@ class openobserveBackend(TextQueryBackend):
         return o2_alert_rule
 
 
-    def finalize_output_o2_alert(self, queries: List[Dict]) -> str:
+    def finalize_output_o2alert(self, queries: List[Dict]) -> str:
         return json.dumps(list(queries))
 
 
