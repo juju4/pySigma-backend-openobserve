@@ -405,9 +405,11 @@ class openobserveBackend(TextQueryBackend):
 
         return o2_query
 
+    # pylint: disable=unused-argument
     def finalize_query_o2alert(
         self, rule: SigmaRule, query: str, index: int, state: ConversionState
     ) -> Any:
+        """Finalize query in o2alert format."""
 
         o2_query = f'SELECT * FROM "{self.table}" WHERE {query}'
         rule_as_dict = rule.to_dict()
@@ -454,6 +456,7 @@ class openobserveBackend(TextQueryBackend):
         return o2_alert_rule
 
     def finalize_output_o2alert(self, queries: List[Dict]) -> str:
+        """Finalize output in o2alert format."""
         return json.dumps(list(queries))
 
     # TODO : Full Text Search with match_all('v')
