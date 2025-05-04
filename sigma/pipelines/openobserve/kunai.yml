@@ -28,21 +28,14 @@ transformations:
     - data_exe_sha1
     sha256:
     - data_exe_sha256
-    Image:
-    - data_exe_path
-    ParentImage:
-    - data_ancestors
-    User:
-    - info_task_user
-    ProcessId:
-    - info_task_pid
-    ParentProcessId:
-    - info_parent_task_pid
-    Computer:
-    - host_name
     DestinationHostname:
     - data_dst_hostname
     DestinationIp:
     - data_dst_ip
     DestinationPort:
     - data_dst_port
+    TargetFilename:
+    - data_path
+# category: network_connection = info_event_name='connect'
+# category: process_creation = info_event_name in ('execve', 'execve_script')
+# category: file_event = info_event_name in ('file_create', 'file_rename', 'file_unlink', 'read_config', 'write_config', 'read', 'write')
