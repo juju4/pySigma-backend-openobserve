@@ -1,5 +1,5 @@
 ![Tests](https://github.com/juju4/pySigma-backend-openobserve/actions/workflows/test.yml/badge.svg)
-![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/juju4/TODO/raw/test.json)
+![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/juju4/0240ecb4d64bacd96821052dafb731c0/raw/test.json)
 ![Status](https://img.shields.io/badge/Status-pre--release-orange)
 
 # pySigma OpenObserve Backend
