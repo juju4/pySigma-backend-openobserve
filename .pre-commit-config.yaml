@@ -36,4 +36,4 @@ repos:
     rev: v3.3.5
     hooks:
       - id: pylint
-        additional_dependencies: ["git+https://github.com/juju4/python-openobserve.git@devel-all", "pySigma", "pytest"]
+        additional_dependencies: ["pySigma", "pytest"]
