@@ -37,6 +37,10 @@ poetry add pysigma-pipeline-windows
 
 ### Convert a rule
 
+```shell
+sigma convert -t openobserve -p /path/to/sigma/pipelines/openobserve/kunai.yml /path/to/sigma/rules/linux/process_creation/proc_creation_lnx_doas_execution.yml
+```
+
 ```python
 from sigma.collection import SigmaCollection
 from sigma.backends.openobserve import openobserve
