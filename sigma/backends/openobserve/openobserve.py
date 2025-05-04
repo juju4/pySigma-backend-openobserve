@@ -95,7 +95,7 @@ class openobserveBackend(TextQueryBackend):
     # FIXME! https://datafusion.apache.org/user-guide/sql/operators.html#escaping
     #   E'string_to_escape'
     add_escaped: ClassVar[str] = (
-        # "\\"  # Characters quoted in addition to wildcards and string quote
+        # "\\"  # Characters quoted in addition to wildcards and string quote
         ""
     )
     # filter_chars    : ClassVar[str] = ""      # Characters filtered
@@ -405,7 +405,6 @@ class openobserveBackend(TextQueryBackend):
 
         return o2_query
 
-
     def finalize_query_o2alert(
         self, rule: SigmaRule, query: str, index: int, state: ConversionState
     ) -> Any:
@@ -424,7 +423,7 @@ class openobserveBackend(TextQueryBackend):
                 "type": "sql",
                 "conditions": [],
                 "sql": o2_query,
-                "multi_time_range": []
+                "multi_time_range": [],
             },
             "trigger_condition": {
                 "period": 60,
@@ -436,30 +435,26 @@ class openobserveBackend(TextQueryBackend):
                 "silence": 240,
                 "timezone": "UTC",
             },
-            "destinations": [
-                "<alert-destination-TBD>"
-            ],
+            "destinations": ["<alert-destination-TBD>"],
             "context_attributes": {},
             "row_template": "",
             "description": (
-                (rule_as_dict["description"] if "description" in rule_as_dict else "") +
-                "\nlevel: " +
-                (rule_as_dict["level"] if "level" in rule_as_dict else "") +
-                "\nstatus: " +
-                (rule_as_dict["status"] if "status" in rule_as_dict else "") +
-                "\nauthor: " +
-                (rule_as_dict["author"] if "author" in rule_as_dict else "")
+                (rule_as_dict["description"] if "description" in rule_as_dict else "")
+                + "\nlevel: "
+                + (rule_as_dict["level"] if "level" in rule_as_dict else "")
+                + "\nstatus: "
+                + (rule_as_dict["status"] if "status" in rule_as_dict else "")
+                + "\nauthor: "
+                + (rule_as_dict["author"] if "author" in rule_as_dict else "")
             ),
             "enabled": True,
             "tz_offset": 0,
-            "owner": "<alert-owner-TBD>"
+            "owner": "<alert-owner-TBD>",
         }
         return o2_alert_rule
 
-
     def finalize_output_o2alert(self, queries: List[Dict]) -> str:
         return json.dumps(list(queries))
-
 
     # TODO : Full Text Search with match_all('v')
     # https://openobserve.ai/docs/sql_reference/#match_allv
