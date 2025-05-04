@@ -133,7 +133,7 @@ def test_openobserve_in_expression(openobserve_backend: openobserveBackend):
             )
         )
         == [
-            "SELECT * FROM <TABLE_NAME> WHERE fieldA='valueA' OR fieldA='valueB' OR fieldA LIKE 'valueC%' ESCAPE '\\'"
+            "SELECT * FROM <TABLE_NAME> WHERE fieldA='valueA' OR fieldA='valueB' OR fieldA LIKE 'valueC%'"
         ]
     )
 
@@ -179,7 +179,7 @@ def test_openobserve_cidr_query(openobserve_backend: openobserveBackend):
         """
             )
         )
-        == ["SELECT * FROM <TABLE_NAME> WHERE field LIKE '192.168.%' ESCAPE '\\'"]
+        == ["SELECT * FROM <TABLE_NAME> WHERE field LIKE '192.168.%'"]
     )
 
 
@@ -225,7 +225,7 @@ def test_openobserve_value_with_wildcards(openobserve_backend: openobserveBacken
             )
         )
         == [
-            "SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE 'wildcard%value' ESCAPE '\\' AND fieldB LIKE 'wildcard_value' ESCAPE '\\'"
+            "SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE 'wildcard%value' AND fieldB LIKE 'wildcard_value'"
         ]
     )
 
@@ -248,7 +248,7 @@ def test_openobserve_value_contains(openobserve_backend: openobserveBackend):
             )
         )
         == [
-            "SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE '%wildcard\\%value%' ESCAPE '\\'"
+            "SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE '%wildcard%value%'"
         ]
     )
 
@@ -271,7 +271,7 @@ def test_openobserve_value_startswith(openobserve_backend: openobserveBackend):
             )
         )
         == [
-            "SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE 'wildcard\\%value%' ESCAPE '\\'"
+            "SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE 'wildcard%value%'"
         ]
     )
 
@@ -294,7 +294,7 @@ def test_openobserve_value_endswith(openobserve_backend: openobserveBackend):
             )
         )
         == [
-            "SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE '%wildcard\\%value' ESCAPE '\\'"
+            "SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE '%wildcard%value'"
         ]
     )
 
