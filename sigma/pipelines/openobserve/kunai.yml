@@ -34,8 +34,13 @@ transformations:
     - data_dst_ip
     DestinationPort:
     - data_dst_port
+    # Initiated: not existing
     TargetFilename:
     - data_path
+    LogonId:
+    - info_task_uid
+    # CurrentDirectory: not existing
+    # ParentCommandLine: not existing (need join)
 # category: network_connection = info_event_name='connect'
 # category: process_creation = info_event_name in ('execve', 'execve_script')
 # category: file_event = info_event_name in ('file_create', 'file_rename', 'file_unlink', 'read_config', 'write_config', 'read', 'write')
