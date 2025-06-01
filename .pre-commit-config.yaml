@@ -10,7 +10,7 @@ repos:
       - id: pretty-format-json
         args:
           - "--autofix"
-          - "--indent=4"
+          - "--indent=2"
           - "--no-sort-keys"
       - id: detect-private-key
       - id: check-case-conflict
@@ -27,7 +27,7 @@ repos:
     rev: v2.4.1
     hooks:
       - id: codespell
-        # args: [-I, .codespellignore]
+        args: [-I, .codespellignore]
   - repo: https://github.com/psf/black
     rev: 25.1.0
     hooks:
