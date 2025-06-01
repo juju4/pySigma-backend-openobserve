@@ -32,6 +32,7 @@ repos:
     rev: 25.1.0
     hooks:
       - id: black
+      - id: black-jupyter
   - repo: https://github.com/PyCQA/pylint
     rev: v3.3.5
     hooks:
