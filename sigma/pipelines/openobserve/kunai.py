@@ -11,7 +11,7 @@ from sigma.processing.transformations import (
     ReplaceStringTransformation,
     AddConditionTransformation,
     # ChangeLogsourceTransformation,
-    # DropDetectionItemTransformation,
+    DropDetectionItemTransformation,
     FieldMappingTransformation,
     DetectionItemFailureTransformation,
     # MapStringTransformation,
@@ -44,7 +44,9 @@ def common_processing_items():
     return [
         ProcessingItem(
             identifier="kunai_process_creation_nix",
-            transformation=AddConditionTransformation({"os_type": "linux"}),
+            transformation=AddConditionTransformation(
+                {"os_type": "linux", "info_event_name": "execve"}
+            ),
             rule_conditions=[
                 logsource_linux_process_creation(),
             ],
@@ -155,6 +157,16 @@ def common_processing_items():
                 logsource_linux_network_connection(),
             ],
             rule_condition_linking=any,
+        ),
+        ProcessingItem(
+            identifier="kunai_network_connection_drop_initiated",
+            transformation=DropDetectionItemTransformation(),
+            rule_conditions=[
+                logsource_linux_network_connection(),
+            ],
+            field_name_conditions=[
+                IncludeFieldCondition(fields=["Initiated"]),
+            ],
         ),
     ]
 
