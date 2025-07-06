@@ -9,7 +9,7 @@ This is the OpenObserve backend for pySigma. It provides the package `sigma.back
 It supports the following output formats:
 
 * **default**: plain SQL for [OpenObserve](https://openobserve.ai/docs/sql_reference/) / [Apache Datafusion](https://datafusion.apache.org/user-guide/sql/index.html)
-* **alerts**: [OpenObserve Alerts json](https://YOURSERVER/swagger/#/Alerts/CreateAlert) - TODO/FIXME!
+* **alerts**: [OpenObserve Alerts json](https://YOURSERVER/swagger/#/Alerts/CreateAlert)
 
 This backend is currently maintained by:
 
