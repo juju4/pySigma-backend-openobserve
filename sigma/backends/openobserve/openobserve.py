@@ -411,12 +411,25 @@ class openobserveBackend(TextQueryBackend):
     ) -> Any:
         """Finalize query in o2alert format."""
 
-        o2_query = f'SELECT * FROM "{self.table}" WHERE {query}'
+        # {"code":400,"message":"Alert with SQL can not contain SELECT * in the SQL query"}
+        # TODO: if fields are defined, use them
+        # if not, set some default fields
+        alertfields_default = [
+            "data_command_line",
+            "data_exe_path",
+            "info_event_name",
+            "info_parent_task_name",
+            "info_task_name",
+            "info_task_uid",
+        ]
+        o2_query = (
+            f'SELECT {",".join(alertfields_default)} FROM "{self.table}" WHERE {query}'
+        )
         rule_as_dict = rule.to_dict()
 
         o2_alert_rule = {
-            "id": rule_as_dict["id"] if "id" in rule_as_dict else "",
-            "name": rule_as_dict["title"],
+            # "id": "",  # ksuid, not required
+            "name": rule_as_dict["title"].replace(" ", "_"),
             "org_id": "default",
             "stream_type": "logs",
             "stream_name": self.table,
@@ -442,6 +455,8 @@ class openobserveBackend(TextQueryBackend):
             "row_template": "",
             "description": (
                 (rule_as_dict["description"] if "description" in rule_as_dict else "")
+                + "\nid: "
+                + (rule_as_dict["id"] if "id" in rule_as_dict else "")
                 + "\nlevel: "
                 + (rule_as_dict["level"] if "level" in rule_as_dict else "")
                 + "\nstatus: "
@@ -452,6 +467,8 @@ class openobserveBackend(TextQueryBackend):
             "enabled": True,
             "tz_offset": 0,
             "owner": "<alert-owner-TBD>",
+            "folder_id": "<alert-folder_id-TBD>",
+            # "last_edited_by": "<alert-owner-TBD>",
         }
         return o2_alert_rule
 

@@ -45,7 +45,7 @@ def common_processing_items():
         ProcessingItem(
             identifier="kunai_process_creation_nix",
             transformation=AddConditionTransformation(
-                {"os_type": "linux", "info_event_name": "execve"}
+                {"os_type": "linux", "info_event_name": ["execve", "execve_script"]}
             ),
             rule_conditions=[
                 logsource_linux_process_creation(),
@@ -59,6 +59,7 @@ def common_processing_items():
                     "Image": "data_exe_path",
                     "CommandLine": "data_command_line",
                     "ParentImage": "data_ancestors",
+                    "ParentCommandLine": "parent_command_line",
                     "User": "info_task_user",
                     "ProcessId": "info_task_pid",
                     "ParentProcessId": "info_parent_task_pid",
@@ -74,10 +75,19 @@ def common_processing_items():
             ],
             rule_condition_linking=any,
         ),
+        ProcessingItem(
+            identifier="kunai_process_creation_drop_currentdirectory",
+            transformation=DropDetectionItemTransformation(),
+            rule_conditions=[
+                logsource_linux_process_creation(),
+            ],
+            field_name_conditions=[
+                IncludeFieldCondition(fields=["CurrentDirectory"]),
+            ],
+        ),
         # Handle unsupported process start events
         generate_unsupported_process_field_processing_item("CurrentDirectory"),
         generate_unsupported_process_field_processing_item("imphash"),
-        generate_unsupported_process_field_processing_item("ParentCommandLine"),
         generate_unsupported_process_field_processing_item("FileVersion"),
         generate_unsupported_process_field_processing_item("Description"),
         generate_unsupported_process_field_processing_item("Product"),
@@ -113,7 +123,16 @@ def common_processing_items():
         ),
         # https://why.kunai.rocks/docs/events/file_create
         ProcessingItem(
-            identifier="kunai_file_fieldmaping",
+            identifier="kunai_file_nix",
+            transformation=AddConditionTransformation(
+                {"os_type": "linux", "info_event_name": ["file_create", "file_unlink"]}
+            ),
+            rule_conditions=[
+                logsource_linux_file_create(),
+            ],
+        ),
+        ProcessingItem(
+            identifier="kunai_file_create_fieldmaping",
             transformation=FieldMappingTransformation(
                 {
                     "Image": "data_exe_path",
@@ -122,7 +141,7 @@ def common_processing_items():
                     "ProcessId": "info_task_pid",
                     "ParentProcessId": "info_parent_task_pid",
                     "Computer": "host_name",
-                    # "?": "data_path",  # created file path
+                    "TargetFilename": "data_path",
                 }
             ),
             rule_conditions=[
@@ -191,7 +210,10 @@ def kunai_pipeline() -> ProcessingPipeline:
             ProcessingItem(
                 identifier="kunai_process_create_eventtype",
                 transformation=AddConditionTransformation(
-                    {"info_event_name": ["file_create"]}
+                    {
+                        "os_type": "linux",
+                        "info_event_name": ["file_create", "file_unlink"],
+                    }
                 ),
                 rule_conditions=[
                     logsource_linux_file_create(),
