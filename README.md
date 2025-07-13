@@ -4,6 +4,7 @@
 ![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/juju4/0240ecb4d64bacd96821052dafb731c0/raw/test.json)
 ![Status](https://img.shields.io/badge/Status-pre--release-orange)
 [![PyPI Downloads](https://static.pepy.tech/badge/pySigma-backend-openobserve/week)](https://pepy.tech/projects/pySigma-backend-openobserve)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/juju4/pySigma-backend-openobserve/badge)](https://scorecard.dev/viewer/?uri=github.com/juju4/pySigma-backend-openobserve)
 
 This is the OpenObserve backend for pySigma. It provides the package `sigma.backends.openobserve` with the `openobserveBackend` class.
 
