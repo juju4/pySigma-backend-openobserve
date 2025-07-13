@@ -87,3 +87,5 @@ poetry run python3 example.py
 
 * SigmaHQ and its contributors.
 * wagga for the sqlite backend from which this one is adapted.
+
+<https://invalid.example.com/>
