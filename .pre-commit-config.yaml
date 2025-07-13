@@ -38,3 +38,11 @@ repos:
     hooks:
       - id: pylint
         additional_dependencies: ["pySigma", "pytest"]
+  - repo: https://github.com/jackdewinter/pymarkdown
+    rev: v0.9.30
+    hooks:
+      - id: pymarkdown
+        args:
+          - -d
+          - MD013
+          - scan
