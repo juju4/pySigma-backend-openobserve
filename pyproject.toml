@@ -20,7 +20,7 @@ pysigma = "^0.11.17"
 [tool.poetry.group.dev.dependencies]
 black = "^25.11"
 pytest = "^8.0"
-pytest-cov = "^4.1"
+pytest-cov = "^7.0"
 coverage = "^7.4"
 
 
