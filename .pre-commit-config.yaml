@@ -37,6 +37,7 @@ repos:
     rev: v3.3.5
     hooks:
       - id: pylint
+        language: python
         additional_dependencies: ["pySigma", "pytest"]
   - repo: https://github.com/jackdewinter/pymarkdown
     rev: v0.9.30
@@ -46,3 +47,8 @@ repos:
           - -d
           - MD013
           - scan
+  - repo: https://github.com/renovatebot/pre-commit-hooks
+    rev: 42.19.3
+    hooks:
+      - id: renovate-config-validator
+        args: [--strict]
