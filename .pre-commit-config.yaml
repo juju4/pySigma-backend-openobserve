@@ -34,7 +34,7 @@ repos:
       - id: black
       - id: black-jupyter
   - repo: https://github.com/PyCQA/pylint
-    rev: v4.0.3
+    rev: v4.0.4
     hooks:
       - id: pylint
         language: python
