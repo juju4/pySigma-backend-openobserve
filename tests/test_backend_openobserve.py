@@ -133,7 +133,7 @@ def test_openobserve_in_expression(openobserve_backend: openobserveBackend):
             )
         )
         == [
-            "SELECT * FROM <TABLE_NAME> WHERE fieldA='valueA' OR fieldA='valueB' OR fieldA LIKE 'valueC%' ESCAPE '\\'"
+            "SELECT * FROM <TABLE_NAME> WHERE fieldA='valueA' OR fieldA='valueB' OR fieldA LIKE 'valueC%'"
         ]
     )
 
@@ -157,7 +157,7 @@ def test_openobserve_regex_query(openobserve_backend: openobserveBackend):
             )
         )
         == [
-            "SELECT * FROM <TABLE_NAME> WHERE regexp_match(fieldA, 'foo.*bar', '') AND fieldB='foo'"
+            "SELECT * FROM <TABLE_NAME> WHERE regexp_like(fieldA, 'foo.*bar', 'i') AND fieldB='foo'"
         ]
     )
 
@@ -179,7 +179,7 @@ def test_openobserve_cidr_query(openobserve_backend: openobserveBackend):
         """
             )
         )
-        == ["SELECT * FROM <TABLE_NAME> WHERE field LIKE '192.168.%' ESCAPE '\\'"]
+        == ["SELECT * FROM <TABLE_NAME> WHERE field LIKE '192.168.%'"]
     )
 
 
@@ -225,7 +225,7 @@ def test_openobserve_value_with_wildcards(openobserve_backend: openobserveBacken
             )
         )
         == [
-            "SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE 'wildcard%value' ESCAPE '\\' AND fieldB LIKE 'wildcard_value' ESCAPE '\\'"
+            "SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE 'wildcard%value' AND fieldB LIKE 'wildcard_value'"
         ]
     )
 
@@ -247,9 +247,7 @@ def test_openobserve_value_contains(openobserve_backend: openobserveBackend):
         """
             )
         )
-        == [
-            "SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE '%wildcard\\%value%' ESCAPE '\\'"
-        ]
+        == ["SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE '%wildcard%value%'"]
     )
 
 
@@ -270,9 +268,7 @@ def test_openobserve_value_startswith(openobserve_backend: openobserveBackend):
         """
             )
         )
-        == [
-            "SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE 'wildcard\\%value%' ESCAPE '\\'"
-        ]
+        == ["SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE 'wildcard%value%'"]
     )
 
 
@@ -293,9 +289,7 @@ def test_openobserve_value_endswith(openobserve_backend: openobserveBackend):
         """
             )
         )
-        == [
-            "SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE '%wildcard\\%value' ESCAPE '\\'"
-        ]
+        == ["SELECT * FROM <TABLE_NAME> WHERE fieldA LIKE '%wildcard%value'"]
     )
 
 
@@ -370,7 +364,7 @@ def test_openobserve_value_case_sensitive_contains(
     )
 
 
-def test_sqlite_o2_alert_output(openobserve_backend: openobserveBackend):
+def test_sqlite_o2alert_output(openobserve_backend: openobserveBackend):
     rule = SigmaCollection.from_yaml(
         r"""
             id: d1736871-3a95-475a-b3ed-7d9e1d8fff99
@@ -388,6 +382,6 @@ def test_sqlite_o2_alert_output(openobserve_backend: openobserveBackend):
         """
     )
     assert (
-        openobserve_backend.convert(rule, "o2_alert")
-        == '[{"id": "d1736871-3a95-475a-b3ed-7d9e1d8fff99", "name": "Test", "org_id": "default", "stream_type": "logs", "stream_name": "{self.table}", "is_real_time": false, "query_condition": {"type": "sql", "conditions": [], "sql": "SELECT * FROM <TABLE_NAME> WHERE fieldA=\'value\'", "multi_time_range": []}, "trigger_condition": {"period": 60, "operator": ">=", "threshold": 3, "frequency": 60, "cron": "", "frequency_type": "minutes", "silence": 240, "timezone": "UTC"}, "destinations": ["<alert-destination-TBD>"], "context_attributes": {}, "row_template": "", "description": "test_description\\nlevel: \\nstatus: test\\nauthor: test_author", "enabled": true, "tz_offset": 0, "owner": "<alert-owner-TBD>"}]'
+        openobserve_backend.convert(rule, "o2alert")
+        == '[{"name": "Test", "org_id": "default", "stream_type": "logs", "stream_name": "<TABLE_NAME>", "is_real_time": false, "query_condition": {"type": "sql", "conditions": [], "sql": "SELECT data_command_line,data_exe_path,info_event_name,info_parent_task_name,info_task_name,info_task_uid FROM \\"<TABLE_NAME>\\" WHERE fieldA=\'value\'", "multi_time_range": []}, "trigger_condition": {"period": 60, "operator": ">=", "threshold": 3, "frequency": 60, "cron": "", "frequency_type": "minutes", "silence": 240, "timezone": "UTC"}, "destinations": ["<alert-destination-TBD>"], "context_attributes": {}, "row_template": "", "description": "test_description\\nid: d1736871-3a95-475a-b3ed-7d9e1d8fff99\\nlevel: \\nstatus: test\\nauthor: test_author", "enabled": true, "tz_offset": 0, "owner": "<alert-owner-TBD>", "folder_id": "<alert-folder_id-TBD>"}]'
     )
