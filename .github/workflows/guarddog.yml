@@ -29,7 +29,13 @@ jobs:
 
       - name: Install GuardDog
         run: |
-          sudo apt-get install -y libgit2-dev
+          sudo apt-get purge -y libgit2-1.7 libgit2-dev
+          sudo apt-get install -y heimdal-dev
+          curl -OL https://github.com/libgit2/libgit2/archive/refs/tags/v1.9.2.tar.gz && \
+            tar xzf v1.9.2.tar.gz && \
+            cd libgit2-1.9.2 && \
+            ./ci/build.sh && \
+            sudo make install
           pip install guarddog==2.6.0
 
       - name: Generate requirements.txt
@@ -46,6 +52,8 @@ jobs:
       - name: Run guarddog
         run: |
           guarddog pypi verify requirements.txt --output-format sarif --exclude-rules repository_integrity_mismatch -x single_python_file > guarddog.sarif
+        env:
+          LD_LIBRARY_PATH: /usr/local/lib
 
       - name: View SARIF file
         run: |
