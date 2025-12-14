@@ -51,7 +51,7 @@ jobs:
 
       - name: Run guarddog
         run: |
-          guarddog pypi verify requirements.txt --output-format sarif --exclude-rules repository_integrity_mismatch -x single_python_file --log-level debug > guarddog.sarif
+          guarddog --log-level debug pypi verify requirements.txt --output-format sarif --exclude-rules repository_integrity_mismatch -x single_python_file > guarddog.sarif
         env:
           LD_LIBRARY_PATH: /usr/local/lib
 
