@@ -29,7 +29,7 @@ jobs:
 
       - name: Install GuardDog
         run: |
-          sudo apt-get purge -y libgit2 libgit2-dev
+          sudo apt-get purge -y libgit2-1.7 libgit2-dev
           sudo apt-get install -y heimdal-dev
           curl -OL https://github.com/libgit2/libgit2/archive/refs/tags/v1.9.2.tar.gz && \
             tar xzf v1.9.2.tar.gz && \
