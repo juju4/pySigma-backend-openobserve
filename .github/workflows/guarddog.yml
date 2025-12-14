@@ -35,7 +35,7 @@ jobs:
             tar xzf v1.9.2.tar.gz && \
             cd libgit2-1.9.2 && \
             ./ci/build.sh && \
-            make install
+            sudo make install
           pip install guarddog==2.6.0
 
       - name: Generate requirements.txt
