@@ -29,8 +29,13 @@ jobs:
 
       - name: Install GuardDog
         run: |
-          sudo apt-get install -y libgit2-dev
-          pip install pygit2==1.15.1
+          sudo apt-get purge -y libgit2 libgit2-dev
+          sudo apt-get install -y heimdal-dev
+          curl -OL https://github.com/libgit2/libgit2/archive/refs/tags/v1.9.2.tar.gz && \
+            tar xzf v1.9.2.tar.gz && \
+            cd libgit2-1.9.2 && \
+            ./ci/build.sh && \
+            make install
           pip install guarddog==2.6.0
 
       - name: Generate requirements.txt
