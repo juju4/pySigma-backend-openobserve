@@ -30,7 +30,7 @@ jobs:
       - name: Install GuardDog
         run: |
           sudo apt-get install -y libgit2-dev
-          pip install pygit2==1.16.0
+          pip install pygit2==1.15.1
           pip install guarddog==2.6.0
 
       - name: Generate requirements.txt
