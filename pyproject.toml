@@ -19,7 +19,7 @@ pysigma = "^1.0.0"
 python_openobserve = "^0.4.1"
 
 [tool.poetry.group.dev.dependencies]
-black = "25.12.0"
+black = "26.1.0"
 pytest = "9.0.2"
 pytest-cov = "7.0.0"
 coverage = "7.13.1"

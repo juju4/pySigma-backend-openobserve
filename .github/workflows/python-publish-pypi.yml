@@ -24,7 +24,7 @@ jobs:
     steps:
       # retrieve your distributions here
       - name: Checkout code
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8  # v6.0.1
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
 
       - name: Set up Python
         uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548  # v6.1.0
@@ -49,7 +49,7 @@ jobs:
           name: python-package-distributions
           path: dist/
       - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@3317ede93a4981d0fc490510c6fcf8bf0e92ed05
+        uses: pypa/gh-action-pypi-publish@03f86fee9ac21f854951f5c6e2a02c2a1324aec7
         with:
           verbose: true
           print-hash: true

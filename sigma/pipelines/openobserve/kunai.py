@@ -24,7 +24,6 @@ from sigma.processing.conditions import (
 from sigma.processing.pipeline import ProcessingItem, ProcessingPipeline
 from sigma.processing.finalization import ConcatenateQueriesFinalizer
 
-
 cond_field_parentbasefilename = IncludeFieldCondition(fields=["ParentBaseFileName"])
 cond_field_contextbasefilename = IncludeFieldCondition(fields=["ContextBaseFileName"])
 
