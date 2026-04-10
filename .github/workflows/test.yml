@@ -33,7 +33,7 @@ jobs:
         run: poetry run python print-coverage.py >> $GITHUB_ENV
       - name: Create coverage badge
         if: ${{ github.repository == 'juju4/pySigma-backend-openobserve' && github.event_name == 'push' && runner.os == 'Linux' }}
-        uses: schneegans/dynamic-badges-action@e9a478b16159b4d31420099ba146cdc50f134483  # tag=v1.7.0
+        uses: schneegans/dynamic-badges-action@0e50b8bad39e7e1afd3e4e9c2b7dd145fad07501  # v1.8.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 0240ecb4d64bacd96821052dafb731c0
