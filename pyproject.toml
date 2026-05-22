@@ -22,7 +22,7 @@ python_openobserve = "^0.4.1"
 black = "26.3.1"
 pytest = "9.0.3"
 pytest-cov = "7.1.0"
-coverage = "7.13.5"
+coverage = "7.14.0"
 
 
 [tool.pdm]
