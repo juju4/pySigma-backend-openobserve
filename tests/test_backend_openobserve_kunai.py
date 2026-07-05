@@ -16,9 +16,7 @@ def test_openobserve_sigma_rule_lnx_doas_execution1(
     openobserve_backend: openobserveBackend,
 ):
     assert (
-        openobserve_backend.convert(
-            SigmaCollection.from_yaml(
-                """
+        openobserve_backend.convert(SigmaCollection.from_yaml("""
 title: Linux Doas Tool Execution
 id: 067d8238-7127-451c-a9ec-fa78045b618b
 status: stable
@@ -31,9 +29,7 @@ detection:
         Image|endswith: '/doas'
     condition: selection
 level: low
-                """
-            )
-        )
+                """))
         == [
             """SELECT data_command_line,data_exe_path,info_event_name,info_parent_task_name,info_task_name,info_task_uid FROM <TABLE_NAME> WHERE (os_type='linux' AND (info_event_name='execve' OR info_event_name LIKE 'execve_script')) AND ((info_event_name='execve' OR info_event_name LIKE 'execve_script') AND data_exe_path LIKE '%/doas')"""
         ]
@@ -44,8 +40,7 @@ def test_openobserve_sigma_rule_lnx_doas_execution2(
     openobserve_backend: openobserveBackend,
 ):
     rule_out = openobserve_backend.convert(
-        SigmaCollection.from_yaml(
-            """
+        SigmaCollection.from_yaml("""
 title: Linux Doas Tool Execution
 id: 067d8238-7127-451c-a9ec-fa78045b618b
 status: stable
@@ -58,8 +53,7 @@ detection:
         Image|endswith: '/doas'
     condition: selection
 level: low
-                """
-        ),
+                """),
         "o2alert",
     )
 
