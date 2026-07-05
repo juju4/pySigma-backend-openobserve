@@ -13,7 +13,7 @@ classifiers = [
 ]
 
 dependencies = [
-    "pysigma==^1.0.0",
+    "pysigma>=1.4.0",
     "python_openobserve>=0.5.1",
 ]
 
