@@ -12,15 +12,15 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 
+dependencies = [
+    "pysigma==^1.0.0",
+    "python_openobserve>=0.5.1",
+]
+
 [tool.poetry]
 packages = [
     { include = "sigma" }
 ]
-
-[tool.poetry.dependencies]
-python = "^3.10"
-pysigma = "^1.0.0"
-python_openobserve = "^0.5.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "26.5.1"
