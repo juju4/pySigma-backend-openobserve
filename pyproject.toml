@@ -14,7 +14,7 @@ classifiers = [
 
 dependencies = [
     "pysigma>=1.4.0",
-    "python_openobserve>=0.5.1",
+    "python_openobserve>=0.5.2",
 ]
 
 [tool.poetry]
