@@ -34,13 +34,13 @@ repos:
       - id: black
       - id: black-jupyter
   - repo: https://github.com/PyCQA/pylint
-    rev: v4.0.7
+    rev: v4.0.8
     hooks:
       - id: pylint
         language: python
         additional_dependencies: ["pySigma", "pytest"]
   - repo: https://github.com/jackdewinter/pymarkdown
-    rev: v0.9.39
+    rev: v0.9.40
     hooks:
       - id: pymarkdown
         args:
@@ -48,7 +48,7 @@ repos:
           - MD013
           - scan
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 44.35.3
+    rev: 44.94.0
     hooks:
       - id: renovate-config-validator
         args: [--strict]
