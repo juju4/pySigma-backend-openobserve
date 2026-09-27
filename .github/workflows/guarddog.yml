@@ -24,19 +24,9 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
-        with:
-          python-version: "3.x"
 
-      - name: Install GuardDog
-        run: |
-          sudo apt-get purge -y libgit2-1.7 libgit2-dev
-          sudo apt-get install -y heimdal-dev
-          curl -OL https://github.com/libgit2/libgit2/archive/refs/tags/v1.9.2.tar.gz && \
-            tar xzf v1.9.2.tar.gz && \
-            cd libgit2-1.9.2 && \
-            ./ci/build.sh && \
-            sudo make install
-          pip install guarddog==2.7.0
+      - name: Set up Python UV
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d  # v10.0.1
 
       - name: Generate requirements.txt
         run: |
@@ -51,7 +41,7 @@ jobs:
 
       - name: Run guarddog
         run: |
-          guarddog pypi verify requirements.txt --output-format sarif --exclude-rules repository_integrity_mismatch -x single_python_file > guarddog.sarif
+          uvx guarddog pypi verify requirements.txt --output-format sarif --exclude-rules repository_integrity_mismatch -x single_python_file > guarddog.sarif
         env:
           LD_LIBRARY_PATH: /usr/local/lib
 
