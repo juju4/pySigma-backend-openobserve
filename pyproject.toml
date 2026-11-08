@@ -3,7 +3,7 @@ name = "pySigma-backend-openobserve"
 version = "0.1.0"
 description = "pySigma openobserve backend"
 readme = "README.md"
-requires-python = ">=3.10,<3.15"
+requires-python = ">=3.11,<3.15"
 authors = [
     { name = "juju4" }
 ]
@@ -13,8 +13,8 @@ classifiers = [
 ]
 
 dependencies = [
-    "pysigma>=1.4.0",
-    "python_openobserve>=0.5.2",
+    "pysigma>=2.0.2",
+    "python_openobserve>=0.6.0",
 ]
 
 [tool.poetry]
